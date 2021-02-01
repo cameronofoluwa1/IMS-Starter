@@ -2,14 +2,14 @@ package com.qa.ims.persistence.domain;
 
 public class Item {
 	
-	private Long id;
+	private Long product_ID;
 	private String product_name;
 	private String product_description;
 	private Double product_value;
 	private Long product_stockLevels;
 	
-	public Item(Long id, String product_name, String product_description, Double product_value, Long product_stockLevels) {
-		this.setId(id);
+	public Item(Long product_ID, String product_name, String product_description, Double product_value, Long product_stockLevels) {
+		this.setId(product_ID);
 		this.setProduct_name(product_name);
 		this.setProduct_description(product_description);
 		this.setProduct_value(product_value);
@@ -17,15 +17,15 @@ public class Item {
 	}
 	
 	public Item(String product_name, String product_description, Double product_value, Long product_stockLevels) {
-		this.setId(id);
+		this.setId(product_ID);
 		this.setProduct_name(product_name);
 		this.setProduct_description(product_description);
 		this.setProduct_value(product_value);
 		this.setProduct_stockLevels(product_stockLevels);
 	}
 	
-	public Item(Long id, String product_name, String product_description) {
-		this.setId(id);
+	public Item(Long product_ID, String product_name, String product_description) {
+		this.setId(product_ID);
 		this.setProduct_name(product_name);
 		this.setProduct_description(product_description);
 	}
@@ -35,12 +35,12 @@ public class Item {
 		this.setProduct_description(product_description);
 	}
 
-	public Long getId() {
-		return id;
+	public Long getproduct_ID() {
+		return product_ID;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Long product_ID) {
+		this.product_ID = product_ID;
 	}
 
 	public String getProduct_name() {
@@ -77,7 +77,7 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "ID = " + id + " Product name = " + product_name + " Product Description = " + product_description+ " Product Value = £" + product_value + " Product Stock Levels = " + product_stockLevels;
+		return "ID = " + product_ID + " Product name = " + product_name + " Product Description = " + product_description+ " Product Value = £" + product_value + " Product Stock Levels = " + product_stockLevels;
 	}
 	
 	

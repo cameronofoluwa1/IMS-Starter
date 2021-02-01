@@ -113,12 +113,14 @@ public class ItemDAO implements Dao<Item>{
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE items SET first_name = ?, surname = ? WHERE id = ?");) {
+						.prepareStatement("UPDATE items SET product_name = ?, product_description = ?, product_value = ?, product_stockLevels = ? WHERE product_ID = ?");) {
 			statement.setString(1, item.getProduct_name());
 			statement.setString(2, item.getProduct_description());
-			statement.setLong(3, item.getId());
+			statement.setDouble(3, item.getProduct_value());
+			statement.setLong(4, item.getProduct_stockLevels());
+			statement.setLong(5, item.getproduct_ID());
 			statement.executeUpdate();
-			return read(item.getId());
+			return read(item.getproduct_ID());
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

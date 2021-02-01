@@ -39,7 +39,7 @@ public class ItemController implements CrudController<Item>{
 	 */
 	@Override
 	public Item create() {
-		LOGGER.info("Please enter product");
+		LOGGER.info("Please enter product name");
 		String product_name = utils.getString();
 		LOGGER.info("Please enter product description");
 		String product_description = utils.getString();
@@ -61,9 +61,13 @@ public class ItemController implements CrudController<Item>{
 		Long id = utils.getLong();
 		LOGGER.info("Please enter product name");
 		String product_name = utils.getString();
-		LOGGER.info("Please enter a product description");
+		LOGGER.info("Please enter product description");
 		String product_description = utils.getString();
-		Item item = itemDAO.update(new Item(id, product_name, product_description));
+		LOGGER.info("Please enter product value");
+		Double product_value = utils.getDouble();
+		LOGGER.info("Please enter product stock level");
+		Long product_stockLevels = utils.getLong();
+		Item item = itemDAO.update(new Item(id, product_name, product_description, product_value, product_stockLevels));
 		LOGGER.info("Item Updated");
 		return item;
 	}
@@ -77,6 +81,7 @@ public class ItemController implements CrudController<Item>{
 	public int delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");
 		Long id = utils.getLong();
+		LOGGER.info("Item Deleted");
 		return itemDAO.delete(id);
 	}
 
