@@ -12,7 +12,7 @@ import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.domain.Domain;
 import com.qa.ims.utils.DBUtils;
 import com.qa.ims.utils.Utils;
-//LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOl
+
 public class IMS {
 
 	public static final Logger LOGGER = LogManager.getLogger();
