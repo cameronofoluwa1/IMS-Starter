@@ -63,11 +63,7 @@ public class ItemDAO implements Dao<Item>{
 		return null;
 	}
 	
-	/**
-	 * Creates a customer in the database
-	 * 
-	 * @param customer - takes in a customer object. id will be ignored
-	 */
+	//Create an item in the database, @param name, description, value, stock_level
 	@Override
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -102,13 +98,7 @@ public class ItemDAO implements Dao<Item>{
 		return null;
 	}
 
-	/**
-	 * Updates a customer in the database
-	 * 
-	 * @param customer - takes in a customer object, the id field will be used to
-	 *                 update that customer in the database
-	 * @return
-	 */
+	//Update an item in the database, @param product_id, name, description, value, stock_level
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -128,11 +118,7 @@ public class ItemDAO implements Dao<Item>{
 		return null;
 	}
 
-	/**
-	 * Deletes a customer in the database
-	 * 
-	 * @param id - id of the customer
-	 */
+	//Delete an item in the database, @param product_id
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();

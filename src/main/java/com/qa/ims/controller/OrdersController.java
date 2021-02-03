@@ -28,9 +28,7 @@ public class OrdersController implements CrudController<Orders> {
 		this.utils = utils;
 	}
 	
-	/**
-	 * Reads all customers to the logger
-	 */
+	//Read all orders
 	@Override
 	public List<Orders> readAll() {
 		List<Orders> orders = ordersDAO.readAll();
@@ -40,50 +38,45 @@ public class OrdersController implements CrudController<Orders> {
 		return orders;
 	}
 
-	/**
-	 * Creates a customer by taking in user input
-	 */
+	//Create an order
 	@Override
 	public Orders create() {
-		boolean enterNewItem = true;
-		Scanner scanner = new Scanner(System.in);
-		LOGGER.info("Please enter a valid customer id");
+		LOGGER.info("\nPlease enter a valid customer id");
 		Long customerID = utils.getLong();
 		Orders orders = ordersDAO.create(new Orders(customerID));
-		LOGGER.info("Created order, ID " + orders.getOrder_ID());
 		LOGGER.info("Please enter an item id = ");
 		Long Item_ID = utils.getLong();
-		Orderline orderline = orderlineDAO.create(new Orderline(orders.getOrder_ID(), Item_ID, Item_ID));
+		LOGGER.info("Please enter item quantity = ");
+		Long orderline_quantity = utils.getLong();
+		Orderline orderline = orderlineDAO.create(new Orderline(ordersDAO.getlatestIDGen(), Item_ID, orderline_quantity));
+		boolean enterNewItem = true;
         do {
-            System.out.println("Add a new item? '1' = Yes, '0' = No");
-            int exitQue = scanner.nextInt();
+            System.out.println("\nAdd a new item? '1' = Yes, '0' = No");
+            Long exitQue = utils.getLong();
             if(exitQue == 0) {
                 enterNewItem = false;
             }else {
                 System.out.println("Enter item ID = ");
-                Long newItem_ID = scanner.nextLong();
-                orderline = orderlineDAO.create(new Orderline(orders.getOrder_ID(), newItem_ID, newItem_ID));
+                Long newItem_ID = utils.getLong();
+                orderline = orderlineDAO.create(new Orderline(ordersDAO.getlatestIDGen(), newItem_ID, newItem_ID));
             }
         } while(enterNewItem);
 
-        System.out.println("Finished customer order, ID " + orders.getOrder_ID());
+        System.out.println("\nCustomer order " + ordersDAO.getlatestIDGen() + " added to system.\n");
 		return orders;
 	}
 
+	//Update an order
 	@Override
 	public Orders update() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * Deletes an existing customer by the id of the customer
-	 * 
-	 * @return
-	 */
+	//Delete an order
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the customer you would like to delete");
+		LOGGER.info("\nEnter order ID you want to delete : ");
 		Long id = utils.getLong();
 		return ordersDAO.delete(id);
 	}

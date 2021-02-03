@@ -22,9 +22,7 @@ public class ItemController implements CrudController<Item>{
 		this.utils = utils;
 	}
 
-	/**
-	 * Reads all items to the logger
-	 */
+	//Reads all items
 	@Override
 	public List<Item> readAll() {
 		List<Item> items = itemDAO.readAll();
@@ -34,9 +32,7 @@ public class ItemController implements CrudController<Item>{
 		return items;
 	}
 
-	/**
-	 * Creates an Item by taking in user input
-	 */
+	//Create an item in the database, @param name, description, value, stock_level
 	@Override
 	public Item create() {
 		LOGGER.info("Please enter product name");
@@ -52,9 +48,7 @@ public class ItemController implements CrudController<Item>{
 		return item;
 	}
 
-	/**
-	 * Updates an existing item by taking in user input
-	 */
+	//Update an item in the database, @param product_id, name, description, value, stock_level
 	@Override
 	public Item update() {
 		LOGGER.info("Please enter the id of the item you would like to update");
@@ -72,11 +66,7 @@ public class ItemController implements CrudController<Item>{
 		return item;
 	}
 
-	/**
-	 * Deletes an existing item by the id of the customer
-	 * 
-	 * @return
-	 */
+	//Update an item in the database, @param product_id
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");

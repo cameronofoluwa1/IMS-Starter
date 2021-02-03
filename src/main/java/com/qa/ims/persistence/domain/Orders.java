@@ -7,12 +7,14 @@ public class Orders {
 	
 	private Long order_ID;
 	private Long customer_id;
+	private Long product_id;
 	private Set<ItemRef> items = new HashSet<>();
 
-	public Orders(Long order_ID, Long customer_id) {
+	public Orders(Long order_ID, Long customer_id, Long product_id) {
 		super();
 		this.order_ID = order_ID;
 		this.customer_id = customer_id;
+		this.product_id = product_id;
 	}
 	
 	public Orders(Long customer_id) {
@@ -31,6 +33,14 @@ public class Orders {
 	public void setOrder_ID(Long order_ID) {
 		this.order_ID = order_ID;
 	}
+	
+	public Long getProduct_ID() {
+		return product_id;
+	}
+
+	public void setProduct_ID(Long product_id) {
+		this.product_id = product_id;
+	}
 
 	
 	public Long getcustomer_id() {
@@ -45,6 +55,6 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return "Order ID = " + order_ID + " Customer ID " + customer_id;
+		return "Order ID = " + order_ID + " Customer ID = " + customer_id + " Product ID = " + product_id;
 	}
 }

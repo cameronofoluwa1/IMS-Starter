@@ -26,11 +26,7 @@ public class CustomerDAO implements Dao<Customer> {
 		return new Customer(id, firstName, surname);
 	}
 
-	/**
-	 * Reads all customers from the database
-	 * 
-	 * @return A list of customers
-	 */
+	//Read all customers, @returns a list
 	@Override
 	public List<Customer> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -61,11 +57,7 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
-	/**
-	 * Creates a customer in the database
-	 * 
-	 * @param customer - takes in a customer object. id will be ignored
-	 */
+	//Create a customer in the database, @param first_name, last_name
 	@Override
 	public Customer create(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -98,13 +90,7 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
-	/**
-	 * Updates a customer in the database
-	 * 
-	 * @param customer - takes in a customer object, the id field will be used to
-	 *                 update that customer in the database
-	 * @return
-	 */
+	//Update customer in database, @param first_name, last_name, id
 	@Override
 	public Customer update(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -122,16 +108,13 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
-	/**
-	 * Deletes a customer in the database
-	 * 
-	 * @param id - id of the customer
-	 */
+	//Delete a customer in the database, @param id
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("DELETE FROM customers WHERE id = ?");) {
 			statement.setLong(1, id);
+			LOGGER.info("Deleted user with ID, " + id);
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);

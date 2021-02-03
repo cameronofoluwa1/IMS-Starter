@@ -18,24 +18,23 @@ import com.qa.ims.utils.DBUtils;
 public class OrdersDAO implements Dao<Orders>{
 
 	public static final Logger LOGGER = LogManager.getLogger();
+	
+	public static Long latestIDGen;
 
 	@Override
 	public Orders modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long order_ID = resultSet.getLong("order_ID");
 		Long customer_id = resultSet.getLong("customer_id");
-		return new Orders(order_ID, customer_id);
+		Long product_id = resultSet.getLong("product_id");
+		return new Orders(order_ID, customer_id, product_id);
 	}
 	
-	/**
-	 * Reads all customers from the database
-	 * 
-	 * @return A list of customers
-	 */
+	//Read all customers, @returns a list
 	@Override
 	public List<Orders> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");) {
+				ResultSet resultSet = statement.executeQuery("SELECT orders.order_ID, orderline.product_id, orders.customer_id FROM orders INNER JOIN orderline ON orders.order_id=orderline.order_id order by orderline.order_ID");) {
 			List<Orders> orders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(modelFromResultSet(resultSet));
@@ -47,11 +46,16 @@ public class OrdersDAO implements Dao<Orders>{
 		}
 		return new ArrayList<>();
 	}
+	
+	//Get the last ID generated in the 'orders' table
+	public Long getlatestIDGen() {
+		return latestIDGen;
+	}
 
 	public Orders readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY order_ID DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT orders.order_ID, orderline.product_id, orders.customer_id FROM orders INNER JOIN orderline ON orders.order_id=orderline.order_id order by orderline.order_ID");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -64,7 +68,7 @@ public class OrdersDAO implements Dao<Orders>{
 	@Override
 	public Orders read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE order_ID = ?");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT orders.order_ID, orderline.product_id, orders.customer_id FROM orders INNER JOIN orderline ON orders.order_id=orderline.order_id where orderline.order_ID = ?");) {
 			statement.setLong(1, id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
@@ -77,18 +81,18 @@ public class OrdersDAO implements Dao<Orders>{
 		return null;
 	}
 	
-	/**
-	 * Creates a customer in the database
-	 * 
-	 * @param customer - takes in a customer object. id will be ignored
-	 */
+	//Creates a customer in the database, @param customer_id
 	@Override
 	public Orders create(Orders orders) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO orders(customer_ID) VALUES (?)");) {
+						.prepareStatement("INSERT INTO orders (customer_id) VALUES (?)", Statement.RETURN_GENERATED_KEYS);) {
 			statement.setLong(1, orders.getcustomer_id());
 			statement.executeUpdate();
+			ResultSet rs = statement.getGeneratedKeys();
+			if(rs.next()) {
+				latestIDGen = rs.getLong(1);
+			}
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -97,22 +101,20 @@ public class OrdersDAO implements Dao<Orders>{
 		return null;
 	}
 
+	//Update a customer in the database
 	@Override
 	public Orders update(Orders t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * Deletes a customer in the database
-	 * 
-	 * @param id - id of the customer
-	 */
+	//Delete a customer in the database, @param customer_id
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE order_ID = ?");) {
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE order_id = ?");) {
 			statement.setLong(1, id);
+			LOGGER.info("\nDeleted order " + id + " from the system.");
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);

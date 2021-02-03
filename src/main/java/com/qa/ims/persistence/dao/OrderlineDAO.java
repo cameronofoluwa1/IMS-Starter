@@ -49,7 +49,7 @@ public class OrderlineDAO implements Dao<Orderline>{
 						.prepareStatement("INSERT INTO orderline(order_id, product_id, orderline_quantity) VALUES (?, ?, ?)");) {
 			statement.setLong(1, orderline.getOrder_ID());
 			statement.setLong(2, orderline.getItem_ID());
-			statement.setLong(3, orderline.getItem_ID());
+			statement.setLong(3, orderline.getorderline_quantity());
 			statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);
