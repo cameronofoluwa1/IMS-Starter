@@ -24,7 +24,7 @@ public class ItemDAO implements Dao<Item>{
 		String product_name = resultSet.getString("product_name");
 		String product_description = resultSet.getString("product_description");
 		Double product_value = resultSet.getDouble("product_value");
-		Long product_stockLevels = resultSet.getLong("product_stockLevels");
+		long product_stockLevels = resultSet.getLong("product_stockLevels");
 		return new Item(id, product_name, product_description, product_value, product_stockLevels);
 	}
 

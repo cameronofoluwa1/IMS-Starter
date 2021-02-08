@@ -81,7 +81,7 @@ public class OrdersDAO implements Dao<Orders>{
 		return null;
 	}
 	
-	//Creates a customer in the database, @param customer_id
+	//Creates a customer order in the database, @param customer_id
 	@Override
 	public Orders create(Orders orders) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -101,14 +101,14 @@ public class OrdersDAO implements Dao<Orders>{
 		return null;
 	}
 
-	//Update a customer in the database
+	//Update a customer order in the database
 	@Override
 	public Orders update(Orders t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	//Delete a customer in the database, @param customer_id
+	//Delete a customer order in the database, @param customer_id
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();

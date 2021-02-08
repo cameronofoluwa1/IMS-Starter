@@ -69,7 +69,25 @@ public class OrdersController implements CrudController<Orders> {
 	//Update an order
 	@Override
 	public Orders update() {
-		// TODO Auto-generated method stub
+		LOGGER.info("Please enter the id of the order you would like to update");
+		Long id = utils.getLong();
+		LOGGER.info("Do you want  to 'add' or 'delete' an item?");
+		String newCmd = utils.getString();
+		System.out.println(newCmd);
+		if(newCmd.equalsIgnoreCase("add")) {
+			LOGGER.info("Please enter an item id = ");
+			Long Item_ID = utils.getLong();
+			LOGGER.info("Please enter item quantity = ");
+			Long orderline_quantity = utils.getLong();
+			Orderline orderline = orderlineDAO.create(new Orderline(id, Item_ID, orderline_quantity));
+		}else if(newCmd.equalsIgnoreCase("delete")) {
+			LOGGER.info("Enter ID of item you want to delete = ");
+			LOGGER.info("Please enter an item id = ");
+			Long Item_ID = utils.getLong();
+			//return OrderlineDAO.delete(id);
+		}else {
+			LOGGER.info("Invalid answer. Returning");
+		}
 		return null;
 	}
 
