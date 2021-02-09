@@ -23,9 +23,9 @@ public class OrdersDAO implements Dao<Orders>{
 
 	@Override
 	public Orders modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long order_ID = resultSet.getLong("order_ID");
-		Long customer_id = resultSet.getLong("customer_id");
-		Long product_id = resultSet.getLong("product_id");
+		Long order_ID = resultSet.getLong("ordersID");
+		Long customer_id = resultSet.getLong("customerID");
+		Long product_id = resultSet.getLong("productID");
 		return new Orders(order_ID, customer_id, product_id);
 	}
 	
@@ -34,7 +34,7 @@ public class OrdersDAO implements Dao<Orders>{
 	public List<Orders> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT orders.order_ID, orderline.product_id, orders.customer_id FROM orders INNER JOIN orderline ON orders.order_id=orderline.order_id order by orderline.order_ID");) {
+				ResultSet resultSet = statement.executeQuery("SELECT orders.ordersID, orderline.productID, orders.customerID FROM orders INNER JOIN orderline ON orders.ordersID=orderline.ordersID order by orderline.ordersID");) {
 			List<Orders> orders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(modelFromResultSet(resultSet));
@@ -55,7 +55,7 @@ public class OrdersDAO implements Dao<Orders>{
 	public Orders readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT orders.order_ID, orderline.product_id, orders.customer_id FROM orders INNER JOIN orderline ON orders.order_id=orderline.order_id order by orderline.order_ID");) {
+				ResultSet resultSet = statement.executeQuery("SELECT orders.ordersID, orderline.productID, orders.customerID FROM orders INNER JOIN orderline ON orders.ordersID=orderline.ordersID order by orderline.ordersID");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -68,7 +68,7 @@ public class OrdersDAO implements Dao<Orders>{
 	@Override
 	public Orders read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT orders.order_ID, orderline.product_id, orders.customer_id FROM orders INNER JOIN orderline ON orders.order_id=orderline.order_id where orderline.order_ID = ?");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT orders.ordersID, orderline.productID, orders.customerID FROM orders INNER JOIN orderline ON orders.ordersID=orderline.ordersID where orderline.ordersID = ?");) {
 			statement.setLong(1, id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
@@ -86,8 +86,8 @@ public class OrdersDAO implements Dao<Orders>{
 	public Orders create(Orders orders) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO orders (customer_id) VALUES (?)", Statement.RETURN_GENERATED_KEYS);) {
-			statement.setLong(1, orders.getcustomer_id());
+						.prepareStatement("INSERT INTO orders (customerID) VALUES (?)", Statement.RETURN_GENERATED_KEYS);) {
+			statement.setLong(1, orders.getCustomerID());
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if(rs.next()) {
@@ -112,7 +112,7 @@ public class OrdersDAO implements Dao<Orders>{
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE order_id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE ordersID = ?");) {
 			statement.setLong(1, id);
 			LOGGER.info("\nDeleted order " + id + " from the system.");
 			return statement.executeUpdate();

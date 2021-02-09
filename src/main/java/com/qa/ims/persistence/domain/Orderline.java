@@ -2,45 +2,87 @@ package com.qa.ims.persistence.domain;
 
 public class Orderline {
 
-	private Long order_ID;
-	private Long item_ID;
-	private long orderline_quantity;
+	private Long orderID;
+	private Long itemID;
+	private long orderlineQuantity;
 	
-	public Orderline(Long order_ID, Long item_ID, Long orderline_quantity) {
+	public Orderline(Long orderID, Long itemID, Long orderlineQuantity) {
 		super();
-		this.order_ID = order_ID;
-		this.item_ID = item_ID;
-		this.orderline_quantity = orderline_quantity;
+		this.orderID = orderID;
+		this.itemID = itemID;
+		this.orderlineQuantity = orderlineQuantity;
+	}
+	
+	public Orderline(Long orderID, Long itemID) {
+		super();
+		this.orderID = orderID;
+		this.itemID = itemID;
 	}
 
-	public Long getOrder_ID() {
-		return order_ID;
+	public Long getOrderID() {
+		return orderID;
 	}
 
-	public void setOrder_ID(Long order_ID) {
-		this.order_ID = order_ID;
+	public void setOrderID(Long orderID) {
+		this.orderID = orderID;
 	}
 
-	public Long getItem_ID() {
-		return item_ID;
+	public Long getItemID() {
+		return itemID;
 	}
 
-	public void setItem_ID(Long item_ID) {
-		this.item_ID = item_ID;
+	public void setItemID(Long itemID) {
+		this.itemID = itemID;
 	}
 
-	public Long getorderline_quantity() {
-		return orderline_quantity;
+	public Long getOrderlineQuantity() {
+		return orderlineQuantity;
 	}
 
-	public void setorderline_quantity(Long orderline_quantity) {
-		this.orderline_quantity = orderline_quantity;
+	public void setOrderlineQuantity(Long orderlineQuantity) {
+		this.orderlineQuantity = orderlineQuantity;
 	}
 
 	@Override
 	public String toString() {
-		return "Order ID = " + order_ID + " Item ID = " + item_ID + " Item Quantity = " + orderline_quantity;
+		return "Order ID = " + orderID + " Item ID = " + itemID + " Item Quantity = " + orderlineQuantity;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
+		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
+		result = prime * result + (int) (orderlineQuantity ^ (orderlineQuantity >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Orderline other = (Orderline) obj;
+		if (itemID == null) {
+			if (other.itemID != null)
+				return false;
+		} else if (!itemID.equals(other.itemID))
+			return false;
+		if (orderID == null) {
+			if (other.orderID != null)
+				return false;
+		} else if (!orderID.equals(other.orderID))
+			return false;
+		if (orderlineQuantity != other.orderlineQuantity)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 }

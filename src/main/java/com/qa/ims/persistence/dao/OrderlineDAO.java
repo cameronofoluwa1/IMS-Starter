@@ -19,9 +19,9 @@ public class OrderlineDAO implements Dao<Orderline>{
 
 	@Override
 	public Orderline modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long order_ID = resultSet.getLong("order_ID");
-		Long item_ID = resultSet.getLong("item_ID");
-		Long orderline_quantity = resultSet.getLong("orderline_quantity");
+		Long order_ID = resultSet.getLong("orderID");
+		Long item_ID = resultSet.getLong("itemID");
+		Long orderline_quantity = resultSet.getLong("orderlineQuantity");
 		return new Orderline(order_ID, item_ID, orderline_quantity);
 	}
 	
@@ -46,11 +46,12 @@ public class OrderlineDAO implements Dao<Orderline>{
 	public Orderline create(Orderline orderline) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO orderline(order_id, product_id, orderline_quantity) VALUES (?, ?, ?)");) {
-			statement.setLong(1, orderline.getOrder_ID());
-			statement.setLong(2, orderline.getItem_ID());
-			statement.setLong(3, orderline.getorderline_quantity());
+						.prepareStatement("INSERT INTO orderline(ordersID, productID, orderlineQuantity) VALUES (?, ?, ?)");) {
+			statement.setLong(1, orderline.getOrderID());
+			statement.setLong(2, orderline.getItemID());
+			statement.setLong(3, orderline.getOrderlineQuantity());
 			statement.executeUpdate();
+			return (new Orderline(orderline.getOrderID(), orderline.getItemID(), orderline.getOrderlineQuantity()));
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
