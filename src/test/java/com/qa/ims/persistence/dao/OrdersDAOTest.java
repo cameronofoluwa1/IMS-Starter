@@ -9,6 +9,26 @@ import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Orders;
 import com.qa.ims.utils.DBUtils;
 
+import static org.mockito.ArgumentMatchers.any;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import com.qa.ims.controller.OrdersController;
+import com.qa.ims.persistence.dao.OrderlineDAO;
+import com.qa.ims.persistence.dao.OrdersDAO;
+import com.qa.ims.persistence.domain.Item;
+import com.qa.ims.persistence.domain.Orderline;
+import com.qa.ims.persistence.domain.Orders;
+import com.qa.ims.utils.Utils;
+@RunWith(MockitoJUnitRunner.class)
 public class OrdersDAOTest {
 
 	private final OrdersDAO DAO = new OrdersDAO();
@@ -23,6 +43,26 @@ public class OrdersDAOTest {
 	public void testCreate() {
 		final Orders created = new Orders(1L);
 		assertEquals(created, DAO.create(created));
+	}
+
+	@Test
+	public void testGetlatestIDGen() {
+		final Orders created = new Orders(1L);
+		Orderline created2 = new Orderline(1L, 1L, 1L);
+		assertEquals("[" + created + "]", DAO.getlatestIDGen());
+	}
+
+	@Test
+	public void testReadAll() {
+		List<Orders> expected = new ArrayList<>();
+		expected.add(new Orders(1L));
+		Orderline created = new Orderline(1L, 1L, 1L);
+		assertEquals("[" + created + "]", DAO.readAll());
+	}
+
+	@Test
+	public void testDelete() {
+		assertEquals(0, DAO.delete(1));
 	}
 
 }

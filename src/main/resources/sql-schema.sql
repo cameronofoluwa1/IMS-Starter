@@ -2,36 +2,45 @@ CREATE SCHEMA IF NOT EXISTS `ims`;
 
 USE `ims` ;
 
-CREATE TABLE IF NOT EXISTS `customers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(40) DEFAULT NULL,
-  `surname` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8
+DROP TABLE IF NOT EXISTS orderline CASCADE;
+DROP TABLE IF NOT EXISTS orders CASCADE;
+DROP TABLE IF NOT EXISTS items CASCADE;
+DROP TABLE IF NOT EXISTS customers CASCADE;
 
-CREATE TABLE IF NOT EXISTS `items` (
-  `product_ID` int(50) NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(50) NOT NULL,
-  `product_description` varchar(250) DEFAULT NULL,
-  `product_value` int(11) NOT NULL,
-  `product_stockLevels` int(11) NOT NULL,
-  PRIMARY KEY (`product_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8
+CREATE TABLE customers (
+    customerID INT(11) NOT NULL AUTO_INCREMENT,
+    firstName VARCHAR(40) DEFAULT NULL,
+    surname VARCHAR(40) DEFAULT NULL,
+    PRIMARY KEY (customerID)
+);
 
-CREATE TABLE IF NOT EXISTS `orders` (
-  `order_ID` int(50) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NOT NULL,
-  PRIMARY KEY (`order_ID`),
-  KEY `customer_id` (`customer_id`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8
+CREATE TABLE items (
+    productID INT NOT NULL AUTO_INCREMENT,
+    productName VARCHAR(50) NOT NULL,
+    productDescription VARCHAR(250) DEFAULT NULL,
+    productValue DOUBLE NOT NULL,
+    productStockLevels INT NOT NULL,
+    PRIMARY KEY (productID)
+);
 
-CREATE TABLE IF NOT EXISTS `orderline` (
-  `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `orderline_quantity` int(11) NOT NULL,
-  KEY `orderline_ibfk_3` (`product_id`),
-  KEY `orderline_ibfk_1` (`order_id`),
-  CONSTRAINT `orderline_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `orderline_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `items` (`product_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+CREATE TABLE orders (
+    ordersID INT NOT NULL AUTO_INCREMENT,
+    customerID INT NOT NULL,
+    PRIMARY KEY (ordersID),
+    FOREIGN KEY (customerID)
+        REFERENCES customers (customerID)
+);
+
+CREATE TABLE orderline (
+    orderlineID INT NOT NULL AUTO_INCREMENT,
+    ordersID INT NOT NULL,
+    productID INT NOT NULL,
+    orderlineQuantity INT,
+    PRIMARY KEY (orderlineID),
+    FOREIGN KEY (ordersID)
+        REFERENCES orders (ordersID)
+        ON DELETE CASCADE,
+    FOREIGN KEY (productID)
+        REFERENCES items (productID)
+        ON DELETE CASCADE
+);

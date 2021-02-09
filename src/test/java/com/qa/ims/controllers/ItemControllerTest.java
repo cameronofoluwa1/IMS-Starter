@@ -71,9 +71,9 @@ public class ItemControllerTest {
 		Item updated = new Item(1L, "TV", "A TV", 5.0, 5L);
 
 		Mockito.when(this.utils.getLong()).thenReturn(1L);
-		Mockito.when(this.utils.getString()).thenReturn(updated.getProduct_name(), updated.getProduct_description());
-		Mockito.when(utils.getDouble()).thenReturn(updated.getProduct_value());
-		Mockito.when(utils.getLong()).thenReturn(updated.getProduct_stockLevels());
+		Mockito.when(this.utils.getString()).thenReturn(updated.getProductName(), updated.getProductDescription());
+		Mockito.when(utils.getDouble()).thenReturn(updated.getProductValue());
+		Mockito.when(utils.getLong()).thenReturn(updated.getProductStockLevels());
 		Mockito.when(this.dao.update(any(Item.class))).thenReturn(updated);
 
 		assertEquals(updated, controller.update());
