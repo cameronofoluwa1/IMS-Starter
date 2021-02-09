@@ -12,16 +12,16 @@ public class Customer {
 	}
 
 	public Customer(Long id, String firstName, String surname) {
-		this.setId(id);
+		this.setID(id);
 		this.setFirstName(firstName);
 		this.setSurname(surname);
 	}
 
-	public Long getId() {
+	public Long getID() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setID(Long id) {
 		this.id = id;
 	}
 

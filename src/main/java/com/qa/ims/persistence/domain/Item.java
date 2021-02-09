@@ -2,82 +2,82 @@ package com.qa.ims.persistence.domain;
 
 public class Item {
 	
-	private Long product_ID;
-	private String product_name;
-	private String product_description;
-	private Double product_value;
-	private Long product_stockLevels;
+	private Long productID;
+	private String productName;
+	private String productDescription;
+	private Double productValue;
+	private Long productStockLevels;
 	
 	public Item(Long product_ID, String product_name, String product_description, Double product_value, Long product_stockLevels) {
 		this.setId(product_ID);
-		this.setProduct_name(product_name);
-		this.setProduct_description(product_description);
-		this.setProduct_value(product_value);
-		this.setProduct_stockLevels(product_stockLevels);
+		this.setProductName(product_name);
+		this.setProductDescription(product_description);
+		this.setProductValue(product_value);
+		this.setProductStockLevels(product_stockLevels);
 	}
 	
 	public Item(String product_name, String product_description, Double product_value, Long product_stockLevels) {
-		this.setId(product_ID);
-		this.setProduct_name(product_name);
-		this.setProduct_description(product_description);
-		this.setProduct_value(product_value);
-		this.setProduct_stockLevels(product_stockLevels);
+		this.setId(productID);
+		this.setProductName(product_name);
+		this.setProductDescription(product_description);
+		this.setProductValue(product_value);
+		this.setProductStockLevels(product_stockLevels);
 	}
 	
 	public Item(Long product_ID, String product_name, String product_description) {
 		this.setId(product_ID);
-		this.setProduct_name(product_name);
-		this.setProduct_description(product_description);
+		this.setProductName(product_name);
+		this.setProductDescription(product_description);
 	}
 	
 	public Item(String product_name, String product_description) {
-		this.setProduct_name(product_name);
-		this.setProduct_description(product_description);
+		this.setProductName(product_name);
+		this.setProductDescription(product_description);
 	}
 
-	public Long getproduct_ID() {
-		return product_ID;
+	public Long getproductID() {
+		return productID;
 	}
 
-	public void setId(Long product_ID) {
-		this.product_ID = product_ID;
+	public void setId(Long productID) {
+		this.productID = productID;
 	}
 
-	public String getProduct_name() {
-		return product_name;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
-	public String getProduct_description() {
-		return product_description;
+	public String getProductDescription() {
+		return productDescription;
 	}
 
-	public void setProduct_description(String product_description) {
-		this.product_description = product_description;
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
 	}
 
-	public Double getProduct_value() {
-		return product_value;
+	public Double getProductValue() {
+		return productValue;
 	}
 
-	public void setProduct_value(Double product_value) {
-		this.product_value = product_value;
+	public void setProductValue(Double productValue) {
+		this.productValue = productValue;
 	}
 
-	public Long getProduct_stockLevels() {
-		return product_stockLevels;
+	public Long getProductStockLevels() {
+		return productStockLevels;
 	}
 
-	public void setProduct_stockLevels(Long product_stockLevels) {
-		this.product_stockLevels = product_stockLevels;
+	public void setProductStockLevels(Long productStockLevels) {
+		this.productStockLevels = productStockLevels;
 	}
 
 	@Override
 	public String toString() {
-		return "ID = " + product_ID + " Product name = " + product_name + " Product Description = " + product_description+ " Product Value = £" + product_value + " Product Stock Levels = " + product_stockLevels;
+		return "ID = " + productID + " Product name = " + productName + " Product Description = " + productDescription+ " Product Value = £" + productValue + " Product Stock Levels = " + productStockLevels;
 	}
 	
 	
