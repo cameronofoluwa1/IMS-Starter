@@ -3,11 +3,13 @@ package com.qa.ims.controllers;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.controller.Action;
 import com.qa.ims.utils.Utils;
-
+@RunWith(MockitoJUnitRunner.class)
 public class ActionTest {
 
 	@Mock
@@ -23,12 +25,6 @@ public class ActionTest {
 	public void getDescriptionTest() {
 		Action action = Action.CREATE;
 		assertEquals("CREATE: To save a new entity into the database", action.getDescription());
-	}
-
-	@Test
-	public void printActionsTest() {
-		Action action = Action.CREATE;
-		assertEquals("Invalid selection please try again", Action.getAction(utils).toString());
 	}
 
 

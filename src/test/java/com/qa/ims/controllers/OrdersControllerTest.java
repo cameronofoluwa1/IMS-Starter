@@ -50,12 +50,12 @@ public class OrdersControllerTest {
 
 	@Test
 	public void testCreateItem() {
-		final Long O_CUST_ID = 1L, O_ITEM_ID = 7L, O_QUANT = 5L, O_NI = 0L;
-		final Orders created = new Orders(O_CUST_ID);
+		final Long OCUSTID = 1L, OITEMID = 7L, OQUANT = 5L, ONI = 0L;
+		final Orders created = new Orders(OCUSTID);
 		
-		Mockito.when(utils.getLong()).thenReturn(O_CUST_ID);
-		Mockito.when(utils.getLong()).thenReturn(O_ITEM_ID, O_QUANT);
-		Mockito.when(utils.getLong()).thenReturn(O_NI);
+		Mockito.when(utils.getLong()).thenReturn(OCUSTID);
+		Mockito.when(utils.getLong()).thenReturn(OITEMID, OQUANT);
+		Mockito.when(utils.getLong()).thenReturn(ONI);
 		Mockito.when(dao.create(any(Orders.class))).thenReturn(created);
 
 		assertEquals(created, controller.create());
@@ -65,21 +65,20 @@ public class OrdersControllerTest {
 	}
 
 	@Test
-	public void testUpdate() {
-		final Long O_ID = 1L, O_ITEM_ID = 1L, O_QUANT = 5L;
-		final String input = "add";
-		Orders updated = new Orders(1L);
+	public void testUpdateItem() {
+		final Long OCUSTID = 1L, OITEMID = 7L, OQUANT = 5L, ONI = 0L;
+		final String ONIS = "add";
+		final Orders created = new Orders(OCUSTID);
+		
+		Mockito.when(utils.getLong()).thenReturn(OCUSTID);
+		Mockito.when(utils.getString()).thenReturn(ONIS);
+		Mockito.when(utils.getLong()).thenReturn(OITEMID, OQUANT);
+		Mockito.when(utils.getLong()).thenReturn(ONI);
 
-		Mockito.when(this.utils.getLong()).thenReturn(O_ID);
-		Mockito.when(this.utils.getString()).thenReturn(input);
-		Mockito.when(this.utils.getLong()).thenReturn(O_ITEM_ID, O_QUANT);
-		Mockito.when(this.dao.update(any(Orders.class))).thenReturn(updated);
+		assertNull(controller.update());
 
-		assertEquals(updated, controller.update());
-
-		Mockito.verify(this.utils, Mockito.times(3)).getLong();
-		Mockito.verify(this.utils, Mockito.times(1)).getString();
-		Mockito.verify(this.dao, Mockito.times(1)).update(any(Orders.class));
+		Mockito.verify(utils, Mockito.times(3)).getLong();
+		Mockito.verify(utils, Mockito.times(1)).getString();
 	}
 
 	@Test

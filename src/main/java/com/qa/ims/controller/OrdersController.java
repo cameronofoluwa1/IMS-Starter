@@ -83,7 +83,7 @@ public class OrdersController implements CrudController<Orders> {
 			Long orderlineQuantity = utils.getLong();
 			Orderline orderline = orderlineDAO.create(new Orderline(id, itemID, orderlineQuantity));
 		}else if(newCmd.equalsIgnoreCase("delete")) {
-			LOGGER.info("Enter orderline ID oyu want to delete = ");
+			LOGGER.info("Enter orderline ID you want to delete = ");
 			Long itemID = utils.getLong();
 			//return OrderlineDAO.delete(id);
 		}else {
