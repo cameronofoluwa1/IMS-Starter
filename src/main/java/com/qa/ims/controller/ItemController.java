@@ -36,14 +36,14 @@ public class ItemController implements CrudController<Item>{
 	@Override
 	public Item create() {
 		LOGGER.info("Please enter product name");
-		String product_name = utils.getString();
+		String productName = utils.getString();
 		LOGGER.info("Please enter product description");
-		String product_description = utils.getString();
+		String productDescription = utils.getString();
 		LOGGER.info("Please enter product value");
-		Double product_value = utils.getDouble();
+		Double productValue = utils.getDouble();
 		LOGGER.info("Please enter product stock level");
-		Long product_stockLevels = utils.getLong();
-		Item item = itemDAO.create(new Item(product_name, product_description, product_value, product_stockLevels));
+		Long productStockLevels = utils.getLong();
+		Item item = itemDAO.create(new Item(productName, productDescription, productValue, productStockLevels));
 		LOGGER.info("Item added to system.");
 		return item;
 	}
@@ -54,14 +54,14 @@ public class ItemController implements CrudController<Item>{
 		LOGGER.info("Please enter the id of the item you would like to update");
 		Long id = utils.getLong();
 		LOGGER.info("Please enter product name");
-		String product_name = utils.getString();
+		String productName = utils.getString();
 		LOGGER.info("Please enter product description");
-		String product_description = utils.getString();
+		String productDescription = utils.getString();
 		LOGGER.info("Please enter product value");
-		Double product_value = utils.getDouble();
+		Double productValue = utils.getDouble();
 		LOGGER.info("Please enter product stock level");
-		Long product_stockLevels = utils.getLong();
-		Item item = itemDAO.update(new Item(id, product_name, product_description, product_value, product_stockLevels));
+		Long productStockLevels = utils.getLong();
+		Item item = itemDAO.update(new Item(id, productName, productDescription, productValue, productStockLevels));
 		LOGGER.info("Item Updated");
 		return item;
 	}

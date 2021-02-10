@@ -1,14 +1,12 @@
 package com.qa.ims.controller;
 
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderlineDAO;
 import com.qa.ims.persistence.dao.OrdersDAO;
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Orderline;
 import com.qa.ims.persistence.domain.Orders;
 import com.qa.ims.utils.Utils;
@@ -20,6 +18,8 @@ public class OrdersController implements CrudController<Orders> {
 	private OrdersDAO ordersDAO;
 	private OrderlineDAO orderlineDAO;
 	private Utils utils;
+	private String inputMessage = "Please enter an item id = ";
+	private String inputMessage2 = "Please enter item quantity = ";
 
 	public OrdersController(OrdersDAO ordersDAO, OrderlineDAO orderlineDAO, Utils utils) {
 		super();
@@ -44,25 +44,27 @@ public class OrdersController implements CrudController<Orders> {
 		LOGGER.info("\nPlease enter a valid customer id");
 		Long customerID = utils.getLong();
 		Orders orders = ordersDAO.create(new Orders(customerID));
-		LOGGER.info("Please enter an item id = ");
-		Long Item_ID = utils.getLong();
-		LOGGER.info("Please enter item quantity = ");
-		Long orderline_quantity = utils.getLong();
-		Orderline orderline = orderlineDAO.create(new Orderline(ordersDAO.getlatestIDGen(), Item_ID, orderline_quantity));
+		LOGGER.info(inputMessage);
+		Long itemID = utils.getLong();
+		LOGGER.info(inputMessage2);
+		Long orderlineQuantity = utils.getLong();
+		Orderline orderline = orderlineDAO.create(new Orderline(ordersDAO.getlatestIDGen(), itemID, orderlineQuantity));
 		boolean enterNewItem = true;
         do {
-            System.out.println("\nAdd a new item? '1' = Yes, '0' = No");
+        	LOGGER.info("\nAdd a new item? '1' = Yes, '0' = No");
             Long exitQue = utils.getLong();
             if(exitQue == 0) {
                 enterNewItem = false;
             }else {
-                System.out.println("Enter item ID = ");
-                Long newItem_ID = utils.getLong();
-                orderline = orderlineDAO.create(new Orderline(ordersDAO.getlatestIDGen(), newItem_ID, newItem_ID));
+    			LOGGER.info(inputMessage);
+    			Long newItemID = utils.getLong();
+    			LOGGER.info(inputMessage2);
+    			Long newOrderlineQuantity = utils.getLong();
+    			orderline = orderlineDAO.create(new Orderline(ordersDAO.getlatestIDGen(), newItemID, newOrderlineQuantity));
             }
         } while(enterNewItem);
 
-        System.out.println("\nCustomer order " + ordersDAO.getlatestIDGen() + " added to system.\n");
+        LOGGER.info(String.format("%nCustomer order %1$s added to the system.", ordersDAO.getlatestIDGen()));
 		return orders;
 	}
 
@@ -73,17 +75,16 @@ public class OrdersController implements CrudController<Orders> {
 		Long id = utils.getLong();
 		LOGGER.info("Do you want  to 'add' or 'delete' an item?");
 		String newCmd = utils.getString();
-		System.out.println(newCmd);
+		LOGGER.info(newCmd);
 		if(newCmd.equalsIgnoreCase("add")) {
-			LOGGER.info("Please enter an item id = ");
-			Long Item_ID = utils.getLong();
-			LOGGER.info("Please enter item quantity = ");
-			Long orderline_quantity = utils.getLong();
-			Orderline orderline = orderlineDAO.create(new Orderline(id, Item_ID, orderline_quantity));
+			LOGGER.info(inputMessage);
+			Long itemID = utils.getLong();
+			LOGGER.info(inputMessage2);
+			Long orderlineQuantity = utils.getLong();
+			Orderline orderline = orderlineDAO.create(new Orderline(id, itemID, orderlineQuantity));
 		}else if(newCmd.equalsIgnoreCase("delete")) {
-			LOGGER.info("Enter ID of item you want to delete = ");
-			LOGGER.info("Please enter an item id = ");
-			Long Item_ID = utils.getLong();
+			LOGGER.info("Enter orderline ID oyu want to delete = ");
+			Long itemID = utils.getLong();
 			//return OrderlineDAO.delete(id);
 		}else {
 			LOGGER.info("Invalid answer. Returning");

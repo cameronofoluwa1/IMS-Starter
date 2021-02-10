@@ -28,7 +28,7 @@ public class ActionTest {
 	@Test
 	public void printActionsTest() {
 		Action action = Action.CREATE;
-		assertEquals("Invalid selection please try again", Action.getAction(utils));
+		assertEquals("Invalid selection please try again", Action.getAction(utils).toString());
 	}
 
 

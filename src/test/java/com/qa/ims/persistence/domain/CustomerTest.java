@@ -2,10 +2,8 @@ package com.qa.ims.persistence.domain;
 
 import static org.junit.Assert.assertEquals;
 
-import java.lang.reflect.Field;
 
 import org.junit.Test;
-import org.mockito.Mock;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 

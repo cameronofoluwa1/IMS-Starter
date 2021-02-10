@@ -49,7 +49,7 @@ public class OrdersDAOTest {
 	public void testGetlatestIDGen() {
 		final Orders created = new Orders(1L);
 		Orderline created2 = new Orderline(1L, 1L, 1L);
-		assertEquals("[" + created + "]", DAO.getlatestIDGen());
+		assertEquals("[" + created + "]", DAO.getlatestIDGen().toString());
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class OrdersDAOTest {
 		List<Orders> expected = new ArrayList<>();
 		expected.add(new Orders(1L));
 		Orderline created = new Orderline(1L, 1L, 1L);
-		assertEquals("[" + created + "]", DAO.readAll());
+		assertEquals("[" + created + "]", DAO.readAll().toString());
 	}
 
 	@Test

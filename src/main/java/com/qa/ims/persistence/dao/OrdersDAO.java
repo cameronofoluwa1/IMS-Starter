@@ -1,7 +1,6 @@
 package com.qa.ims.persistence.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,10 +22,10 @@ public class OrdersDAO implements Dao<Orders>{
 
 	@Override
 	public Orders modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long order_ID = resultSet.getLong("ordersID");
-		Long customer_id = resultSet.getLong("customerID");
-		Long product_id = resultSet.getLong("productID");
-		return new Orders(order_ID, customer_id, product_id);
+		Long orderID = resultSet.getLong("ordersID");
+		Long customerID = resultSet.getLong("customerID");
+		Long productID = resultSet.getLong("productID");
+		return new Orders(orderID, customerID, productID);
 	}
 	
 	//Read all customers, @returns a list
@@ -114,7 +113,7 @@ public class OrdersDAO implements Dao<Orders>{
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE ordersID = ?");) {
 			statement.setLong(1, id);
-			LOGGER.info("\nDeleted order " + id + " from the system.");
+			LOGGER.info(String.format("Deleted order with ID %1$s ", id));
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);

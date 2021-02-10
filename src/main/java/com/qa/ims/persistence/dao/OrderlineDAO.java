@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Orderline;
-import com.qa.ims.persistence.domain.Orders;
 import com.qa.ims.utils.DBUtils;
 
 public class OrderlineDAO implements Dao<Orderline>{
@@ -19,10 +18,10 @@ public class OrderlineDAO implements Dao<Orderline>{
 
 	@Override
 	public Orderline modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long order_ID = resultSet.getLong("orderID");
-		Long item_ID = resultSet.getLong("itemID");
-		Long orderline_quantity = resultSet.getLong("orderlineQuantity");
-		return new Orderline(order_ID, item_ID, orderline_quantity);
+		Long orderID = resultSet.getLong("orderID");
+		Long itemID = resultSet.getLong("itemID");
+		Long orderlineQuantity = resultSet.getLong("orderlineQuantity");
+		return new Orderline(orderID, itemID, orderlineQuantity);
 	}
 	
 	@Override
@@ -65,9 +64,18 @@ public class OrderlineDAO implements Dao<Orderline>{
 		return null;
 	}
 
+	//Delete a customer order in the database, @param customer_id
 	@Override
 	public int delete(long id) {
-		// TODO Auto-generated method stub
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM orderline WHERE orderlineID = ?");) {
+			statement.setLong(1, id);
+			LOGGER.info(String.format("Deleted order with ID %1$s ", id));
+			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return 0;
 	}
 

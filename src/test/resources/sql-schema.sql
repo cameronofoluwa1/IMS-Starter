@@ -25,6 +25,7 @@ CREATE TABLE orders (
     PRIMARY KEY (ordersID),
     FOREIGN KEY (customerID)
         REFERENCES customers (customerID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE orderline (

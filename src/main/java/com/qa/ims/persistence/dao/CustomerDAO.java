@@ -66,6 +66,7 @@ public class CustomerDAO implements Dao<Customer> {
 			statement.setString(1, customer.getFirstName());
 			statement.setString(2, customer.getSurname());
 			statement.executeUpdate();
+			LOGGER.info(String.format("Deleted user with first name %1$s & surname %2$s", customer.getFirstName(), customer.getSurname()));
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -114,7 +115,7 @@ public class CustomerDAO implements Dao<Customer> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("DELETE FROM customers WHERE customerID = ?");) {
 			statement.setLong(1, customerID);
-			LOGGER.info("Deleted user with customerID, " + customerID);
+			LOGGER.info(String.format("Deleted user with customerID %1$s", customerID));
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);
