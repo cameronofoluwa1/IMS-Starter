@@ -20,17 +20,13 @@ public class CustomerDAO implements Dao<Customer> {
 
 	@Override
 	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long id = resultSet.getLong("id");
-		String firstName = resultSet.getString("first_name");
+		Long id = resultSet.getLong("customerID");
+		String firstName = resultSet.getString("firstName");
 		String surname = resultSet.getString("surname");
 		return new Customer(id, firstName, surname);
 	}
 
-	/**
-	 * Reads all customers from the database
-	 * 
-	 * @return A list of customers
-	 */
+	//Read all customers, @returns a list
 	@Override
 	public List<Customer> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -51,7 +47,7 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY customerID DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -61,19 +57,16 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
-	/**
-	 * Creates a customer in the database
-	 * 
-	 * @param customer - takes in a customer object. id will be ignored
-	 */
+	//Create a customer in the database, @param first_name, last_name
 	@Override
 	public Customer create(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO customers(first_name, surname) VALUES (?, ?)");) {
+						.prepareStatement("INSERT INTO customers(firstName, surname) VALUES (?, ?)");) {
 			statement.setString(1, customer.getFirstName());
 			statement.setString(2, customer.getSurname());
 			statement.executeUpdate();
+			LOGGER.info(String.format("Deleted user with first name %1$s & surname %2$s", customer.getFirstName(), customer.getSurname()));
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -83,10 +76,10 @@ public class CustomerDAO implements Dao<Customer> {
 	}
 
 	@Override
-	public Customer read(Long id) {
+	public Customer read(Long customerID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE id = ?");) {
-			statement.setLong(1, id);
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE customerID = ?");) {
+			statement.setLong(1, customerID);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
 				return modelFromResultSet(resultSet);
@@ -98,23 +91,17 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
-	/**
-	 * Updates a customer in the database
-	 * 
-	 * @param customer - takes in a customer object, the id field will be used to
-	 *                 update that customer in the database
-	 * @return
-	 */
+	//Update customer in database, @param first_name, last_name, id
 	@Override
 	public Customer update(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");) {
+						.prepareStatement("UPDATE customers SET firstName = ?, surname = ? WHERE customerID = ?");) {
 			statement.setString(1, customer.getFirstName());
 			statement.setString(2, customer.getSurname());
-			statement.setLong(3, customer.getId());
+			statement.setLong(3, customer.getID());
 			statement.executeUpdate();
-			return read(customer.getId());
+			return read(customer.getID());
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -122,16 +109,13 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
-	/**
-	 * Deletes a customer in the database
-	 * 
-	 * @param id - id of the customer
-	 */
+	//Delete a customer in the database, @param id
 	@Override
-	public int delete(long id) {
+	public int delete(long customerID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM customers WHERE id = ?");) {
-			statement.setLong(1, id);
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM customers WHERE customerID = ?");) {
+			statement.setLong(1, customerID);
+			LOGGER.info(String.format("Deleted user with customerID %1$s", customerID));
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);

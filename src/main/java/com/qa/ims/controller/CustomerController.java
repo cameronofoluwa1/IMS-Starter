@@ -26,9 +26,7 @@ public class CustomerController implements CrudController<Customer> {
 		this.utils = utils;
 	}
 
-	/**
-	 * Reads all customers to the logger
-	 */
+	//Reads all customers from table
 	@Override
 	public List<Customer> readAll() {
 		List<Customer> customers = customerDAO.readAll();
@@ -38,9 +36,7 @@ public class CustomerController implements CrudController<Customer> {
 		return customers;
 	}
 
-	/**
-	 * Creates a customer by taking in user input
-	 */
+	//Create a customer in the database, @param first_name, last_name
 	@Override
 	public Customer create() {
 		LOGGER.info("Please enter a first name");
@@ -52,9 +48,7 @@ public class CustomerController implements CrudController<Customer> {
 		return customer;
 	}
 
-	/**
-	 * Updates an existing customer by taking in user input
-	 */
+	//Update customer in database, @param first_name, last_name, id
 	@Override
 	public Customer update() {
 		LOGGER.info("Please enter the id of the customer you would like to update");
@@ -68,11 +62,7 @@ public class CustomerController implements CrudController<Customer> {
 		return customer;
 	}
 
-	/**
-	 * Deletes an existing customer by the id of the customer
-	 * 
-	 * @return
-	 */
+	//Delete a customer in the database, @param id
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the customer you would like to delete");
