@@ -5,12 +5,21 @@ public class Orders {
 	private Long orderID;
 	private Long customerID;
 	private Long productID;
+	private double orderValue;
 
 	public Orders(Long orderID, Long customerID, Long productID) {
 		super();
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.productID = productID;
+	}
+
+	public Orders(Long orderID, Long customerID, Long productID, double orderValue) {
+		super();
+		this.orderID = orderID;
+		this.customerID = customerID;
+		this.productID = productID;
+		this.orderValue = orderValue;
 	}
 	
 	public Orders(Long customerID) {
@@ -45,8 +54,13 @@ public class Orders {
 	}
 
 
+	public String toString1() {
+		return "Order ID = " + orderID + " Customer ID = " + customerID + " Product ID = " + productID;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Order ID = " + orderID + " Customer ID = " + customerID + " Product ID = " + productID;
+		return "Order ID = " + orderID + " Customer ID = " + customerID + " Product ID = " + productID + " order Value = £" + orderValue;
 	}
 }

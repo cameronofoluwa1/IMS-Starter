@@ -25,7 +25,8 @@ public class OrdersDAO implements Dao<Orders>{
 		Long orderID = resultSet.getLong("ordersID");
 		Long customerID = resultSet.getLong("customerID");
 		Long productID = resultSet.getLong("productID");
-		return new Orders(orderID, customerID, productID);
+		double orderValue = resultSet.getDouble("orderValue");
+		return new Orders(orderID, customerID, productID, orderValue);
 	}
 	
 	//Read all customers, @returns a list
@@ -33,7 +34,18 @@ public class OrdersDAO implements Dao<Orders>{
 	public List<Orders> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT orders.ordersID, orderline.productID, orders.customerID FROM orders INNER JOIN orderline ON orders.ordersID=orderline.ordersID order by orderline.ordersID");) {
+				ResultSet resultSet = statement.executeQuery("SELECT \r\n"
+						+ "    orders.ordersID,\r\n"
+						+ "    orders.customerID,\r\n"
+						+ "    orderline.productID,\r\n"
+						+ "    SUM(orderline.orderlineQuantity * items.productValue) AS orderValue\r\n"
+						+ "FROM\r\n"
+						+ "    orders AS orders\r\n"
+						+ "        INNER JOIN\r\n"
+						+ "    orderline AS orderline ON orders.ordersID = orderline.ordersID\r\n"
+						+ "        INNER JOIN\r\n"
+						+ "    items AS items ON orderline.productID = items.productID\r\n"
+						+ "    group by orders.ordersID, orderline.productID;");) {
 			List<Orders> orders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(modelFromResultSet(resultSet));
@@ -54,7 +66,18 @@ public class OrdersDAO implements Dao<Orders>{
 	public Orders readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT orders.ordersID, orderline.productID, orders.customerID FROM orders INNER JOIN orderline ON orders.ordersID=orderline.ordersID order by orderline.ordersID");) {
+				ResultSet resultSet = statement.executeQuery("SELECT \r\n"
+						+ "    orders.ordersID,\r\n"
+						+ "    orders.customerID,\r\n"
+						+ "    orderline.productID,\r\n"
+						+ "    SUM(orderline.orderlineQuantity * items.productValue) AS orderValue\r\n"
+						+ "FROM\r\n"
+						+ "    orders AS orders\r\n"
+						+ "        INNER JOIN\r\n"
+						+ "    orderline AS orderline ON orders.ordersID = orderline.ordersID\r\n"
+						+ "        INNER JOIN\r\n"
+						+ "    items AS items ON orderline.productID = items.productID\r\n"
+						+ "    group by orders.ordersID, orderline.productID;");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -67,7 +90,19 @@ public class OrdersDAO implements Dao<Orders>{
 	@Override
 	public Orders read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT orders.ordersID, orderline.productID, orders.customerID FROM orders INNER JOIN orderline ON orders.ordersID=orderline.ordersID where orderline.ordersID = ?");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT \r\n"
+						+ "    orders.ordersID,\r\n"
+						+ "    orders.customerID,\r\n"
+						+ "    orderline.productID,\r\n"
+						+ "    SUM(orderline.orderlineQuantity * items.productValue) AS orderValue\r\n"
+						+ "FROM\r\n"
+						+ "    orders AS orders\r\n"
+						+ "        INNER JOIN\r\n"
+						+ "    orderline AS orderline ON orders.ordersID = orderline.ordersID\r\n"
+						+ "        INNER JOIN\r\n"
+						+ "    items AS items ON orderline.productID = items.productID\r\n"
+						+ "    where orderline.ordersID = ?\r\n"
+						+ "    group by orders.ordersID, orderline.productID;");) {
 			statement.setLong(1, id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();

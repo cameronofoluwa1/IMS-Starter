@@ -66,7 +66,7 @@ public class CustomerDAO implements Dao<Customer> {
 			statement.setString(1, customer.getFirstName());
 			statement.setString(2, customer.getSurname());
 			statement.executeUpdate();
-			LOGGER.info(String.format("Deleted user with first name %1$s & surname %2$s", customer.getFirstName(), customer.getSurname()));
+			LOGGER.info(String.format("Created user with first name %1$s & surname %2$s", customer.getFirstName(), customer.getSurname()));
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);

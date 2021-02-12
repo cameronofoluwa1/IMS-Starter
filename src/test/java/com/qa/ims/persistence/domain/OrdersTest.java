@@ -52,9 +52,9 @@ public class OrdersTest {
 		}
 
 	@Test
-	public void testToString() {
+	public void testToString1() {
 		final String expected = "Order ID = " + orders.getOrderID() + " Customer ID = " + orders.getCustomerID() + " Product ID = " + orders.getProductID();
-		assertEquals(expected, orders.toString());
+		assertEquals(expected, orders.toString1());
 	}
 
 	@Test

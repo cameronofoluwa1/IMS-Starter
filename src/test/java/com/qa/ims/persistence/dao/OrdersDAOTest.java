@@ -42,18 +42,18 @@ public class OrdersDAOTest {
 	@Test
 	public void testCreate() {
 		final Orders created = new Orders(1L, 1L, 1L);
-		assertEquals(created.toString(), DAO.create(created).toString());
+		assertEquals("Order ID = 1 Customer ID = 1 Product ID = 1 order Value = £25.0", DAO.create(created).toString());
 	}
 
 	@Test
 	public void testReadAll() {
-		assertEquals("[Order ID = 1 Customer ID = 1 Product ID = 1]", DAO.readAll().toString());
+		assertEquals("[Order ID = 1 Customer ID = 1 Product ID = 1 order Value = £25.0]", DAO.readAll().toString());
 	}
 
 	@Test
 	public void testRead() {
 		
-		assertEquals("Order ID = 1 Customer ID = 1 Product ID = 1", DAO.read(1L).toString());
+		assertEquals("Order ID = 1 Customer ID = 1 Product ID = 1 order Value = £25.0", DAO.read(1L).toString());
 	}
 
 	@Test
